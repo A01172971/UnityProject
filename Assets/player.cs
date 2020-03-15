@@ -11,41 +11,43 @@ public class player : MonoBehaviour
 	public Transform feet;
 	public LayerMask ground;
 	float widthFeet = 0.2f;
-	float jumpForce = 300f;
+	float jumpForce = 500f;
 	bool inGround = false;
 	Animator anim;
 	Rigidbody2D rbody;
 	bool flip = false;
 
-    // Start is called before the first frame update
+
+    //Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();    
-    	rbody = GetComponent<Rigidbody2D>();	
+        anim = GetComponent<Animator>(); //We get the animator component of the player 
+    	rbody = GetComponent<Rigidbody2D>(); //We get the rigid body component of the player
     }
 
-    // Update is called once per frame
+
+    //Update is called once per frame
     void Update()
     {
-    	//inGround = Physics2D.OverlapCircle(feet.position, widthFeet, ground);
-		//anim.SetBool("pisando", inGround);
+    	inGround = Physics2D.OverlapCircle(feet.position, widthFeet, ground); //We test if player feets overlap ground
+		anim.SetBool("pisando", inGround); //We send it to unity parameter
 
-    	float walk = Input.GetAxis("Horizontal");
-		anim.SetFloat("caminar", Mathf.Abs(walk)); //caminar is the parameter in animator
-		rbody.velocity = new Vector2(walk * 5f, rbody.velocity.y);
-        if (!flip && walk < 0) Flip();
-    	if (flip && walk > 0) Flip();
+    	float walk = Input.GetAxis("Horizontal"); //Horizontal axis of the player
+		anim.SetFloat("caminar", Mathf.Abs(walk)); //We send it to unity parameter 
+		rbody.velocity = new Vector2(walk * 4f, rbody.velocity.y); //velocity of the player
+        if (!flip && walk < 0) Flip(); //To change horizontal axis of the player if going to left
+    	if (flip && walk > 0) Flip(); //To change horizontal axis of the player if going to right
     
-    /*
+    	//Jump
 		if (Input.GetKey(KeyCode.Space) && inGround)
 		{
 			rbody.AddForce(new Vector2(0,jumpForce));
 		}
-
-		anim.SetFloat("altura",rbody.velocity.y);
-		*/
+		anim.SetFloat("altura",rbody.velocity.y); //We sent it to unity parameter
     }
 
+
+    //Flip the horizontal axis 
     void Flip()
     {
     	flip = !flip;
@@ -54,6 +56,8 @@ public class player : MonoBehaviour
     	transform.localScale = scale;
     }
 
+
+    //Reset the scene
 	IEnumerator ChangeScene()
 	{
 		yield return new WaitForSeconds(2);
