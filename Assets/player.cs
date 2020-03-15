@@ -11,7 +11,8 @@ public class player : MonoBehaviour
 	public Transform feet;
 	public LayerMask ground;
 	float widthFeet = 0.2f;
-	float jumpForce = 500f;
+	float jumpForce = 600f;
+	float velocity = 6f;
 	bool inGround = false;
 	Animator anim;
 	Rigidbody2D rbody;
@@ -34,12 +35,12 @@ public class player : MonoBehaviour
 
     	float walk = Input.GetAxis("Horizontal"); //Horizontal axis of the player
 		anim.SetFloat("caminar", Mathf.Abs(walk)); //We send it to unity parameter 
-		rbody.velocity = new Vector2(walk * 4f, rbody.velocity.y); //velocity of the player
+		rbody.velocity = new Vector2(walk * velocity, rbody.velocity.y); //velocity of the player
         if (!flip && walk < 0) Flip(); //To change horizontal axis of the player if going to left
     	if (flip && walk > 0) Flip(); //To change horizontal axis of the player if going to right
     
     	//Jump
-		if (Input.GetKey(KeyCode.Space) && inGround)
+		if (Input.GetKey(KeyCode.UpArrow) && inGround)
 		{
 			rbody.AddForce(new Vector2(0,jumpForce));
 		}
