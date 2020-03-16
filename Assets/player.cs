@@ -11,13 +11,12 @@ public class player : MonoBehaviour
 	public Transform feet;
 	public LayerMask ground;
 	float widthFeet = 0.2f;
-	float jumpForce = 600f;
-	float velocity = 6f;
+	float jump = 25f;
+	float velocity = 10f;
 	bool inGround = false;
 	Animator anim;
 	Rigidbody2D rbody;
 	bool flip = false;
-
 
     //Start is called before the first frame update
     void Start()
@@ -38,11 +37,11 @@ public class player : MonoBehaviour
 		rbody.velocity = new Vector2(walk * velocity, rbody.velocity.y); //velocity of the player
         if (!flip && walk < 0) Flip(); //To change horizontal axis of the player if going to left
     	if (flip && walk > 0) Flip(); //To change horizontal axis of the player if going to right
-    
+
     	//Jump
-		if (Input.GetKey(KeyCode.UpArrow) && inGround)
+		if (Input.GetKeyDown(KeyCode.UpArrow) && inGround)
 		{
-			rbody.AddForce(new Vector2(0,jumpForce));
+			rbody.AddForce(new Vector2(0,jump), ForceMode2D.Impulse);
 		}
 		anim.SetFloat("altura",rbody.velocity.y); //We sent it to unity parameter
     }

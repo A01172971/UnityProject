@@ -5,7 +5,7 @@ using UnityEngine;
 public class camera : MonoBehaviour
 {
 	public Transform target;
-	float speed = 1f;
+	float speed = 4f;
     
     // Start is called before the first frame update
     void Start()
@@ -16,6 +16,8 @@ public class camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    	//transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+    	
     	//Follow the player in horizontal axis
         transform.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
     	
